@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Wecome to JustChat</h1>
+    <h2>Hi {{user}}! </h2>
+    <h2>Availabel rooms</h2>
+    {% for room in rooms %}
+        <p>{{ room }}</p>
+    {% endfor%}
+    <p><b>Enter an exiting room or a new room </b></p>
+    <!-- <br> -->
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input id="room-name-input" type="text" size="100" name="room_name"><br><br>
+        <input id="room-name-submit" type="button" value="Enter">   
+    </form>
+    
+
+</body>
+</html>
