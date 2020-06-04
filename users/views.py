@@ -8,8 +8,9 @@ from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
+
 def index(request):
-    return render(request, 'users/index.html')
+    return render(request, 'users/signup.html')
 
 
 def signup(request):
@@ -27,8 +28,7 @@ def signup(request):
             new_user.save()
             return redirect('http://127.0.0.1:8000/login/')
 
-    return render(request, 'users/signup.html')
-    # return HttpResponse("Hello, I am a signUp page.")
+    return render(request, 'users/index.html')
 
 
 def user_login(request):
