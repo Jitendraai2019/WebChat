@@ -43,36 +43,7 @@
         </header>
     
 
-        <div>
-            <form action="" method="POST">
-                {% csrf_token %} 
-                <fieldset>
-                    <p> SignUp</p>
-                    <div>
-                        <input type="text" name="username" id="username" placeholder="username">
-                    </div>
-                    <div>
-                        <input type="email" name="email" id="email" placeholder="email Address">
-                    </div>
-                    <div>
-                        <input type="password" name="password" id="password" placeholder="password">
-                    </div>
-                    <div>
-                        <input type="password" name="confirm-password" id="confirm-password" placeholder="confirm password">
-                    </div>
-                    <div>
-                        <label for="">
-                            <input type="checkbox" name="" id="">
-                            By Clicking SignUp you're agree to our policy & terms
-                        </label>
-                    </div>
-                    <div>
-                        <input type="submit" value="SignUp">
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-    
+        
     
         <form action="/signup" method="GET">
             <button>signUp</button>
