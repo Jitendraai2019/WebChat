@@ -10,14 +10,12 @@ from django.contrib.auth.models import User
 
 @login_required(login_url='/login')
 def user_details(request):
-
     username = request.user
     rooms = Room.objects.filter(user=username)
     context = {
         'user': username,
         'rooms': rooms
     }
-
     if request.method == "POST":
         room_name = request.POST['room_name']
         room = Room.objects.filter(room_name=room_name)
@@ -27,6 +25,7 @@ def user_details(request):
             new_room.save()
         # return reverse('chat:chat_room')
         return redirect('http://127.0.0.1:8000/chat/' + room_name + '/')
+
     return render(request, 'chat/user.html', context)
 
 
@@ -34,13 +33,10 @@ def user_details(request):
 def chat_rooms(request, room_name):
     ''''''
     current_user = request.user
-    
+    user_all_rooms = Room.objects.filter(user=current_user)
     rooms = Room.objects.get(room_name=room_name)
-    # print('****************************')
-    print(rooms)
     messages = Message.objects.filter(room=rooms).order_by('-timestamp').all()[:6]
     # messages = messages.order_by('-timstamp').all()[:10]
-
 
     if request.method == 'POST':
         msg = request.POST['chat-msg-input']
@@ -55,7 +51,8 @@ def chat_rooms(request, room_name):
     return render(request, 'chat/room.html', {
         'room_name': room_name,
         'username': current_user,
-        'messages': messages
+        'messages': messages,
+        'user_all_rooms': user_all_rooms
     })
 
 

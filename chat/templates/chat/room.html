@@ -8,11 +8,9 @@
 </head>
 <body>
      
-
     <header class="header-main">
 
         <div id="header-child1">
-            <!-- <h1 id="logo">Justchat</h1>  -->
             <a href="http://127.0.0.1:8000/"><h1 id="logo">Justchat</h1></a>
         </div>
 
@@ -34,7 +32,11 @@
 
     <div class="container">
         <div class="rooms">
-            <h1>Rooms</h1>
+            <h1>Your chat rooms</h1>
+            {% for room in user_all_rooms %}
+                <a href="{% url 'chat:chat_room' room.room_name %}"><h3>{{room}}</h3></a>
+                
+            {% endfor %}
         </div>
 
         <div class="chats">
@@ -55,15 +57,7 @@
                 </form>
             </div>
         </div>
-
-        
     </div>
-
     <div></div>
-
-
-    <!-- <h2>This is a room page.</h2>
-
-    
 </body>
 </html>
