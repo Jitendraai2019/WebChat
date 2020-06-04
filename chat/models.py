@@ -10,6 +10,7 @@ class Room(models.Model):
             User, on_delete=models.CASCADE
         )
     room_name = models.CharField(max_length=50)
+    participants = models.ManyToManyField(User, related_name='friends', blank=True)
 
     def __str__(self):
         return self.room_name
