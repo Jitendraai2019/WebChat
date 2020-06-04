@@ -11,7 +11,7 @@
     <header class="header-main">
 
         <div id="header-child1">
-            <a href="http://127.0.0.1:8000/"><h1 id="logo">Justchat</h1></a>
+            <a href="{% url 'user:home' %}"><h1 id="logo">Justchat</h1></a>
         </div>
 
         <div class="header-child2">
@@ -51,7 +51,6 @@
             <div class="chat-input">
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <!-- <textarea name="chat-msg-input" id="chat-msg-input" cols="110" rows="2"></textarea> -->
                     <input type="text" name="chat-msg-input" id="chat-msg-input" size="100">
                     <input type="submit" name="Send" id="">
                 </form>

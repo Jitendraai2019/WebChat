@@ -6,7 +6,9 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def index(request):
-    return render(request, 'users/index.html')
+    ''''''
+    current_user = request.user
+    return render(request, 'users/index.html', {'user': current_user})
 
 
 def signup(request):
