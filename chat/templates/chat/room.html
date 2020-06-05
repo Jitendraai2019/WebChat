@@ -43,8 +43,9 @@
             <div class="chat-msg">
                 
                 {% for message in messages %}
-                <h2>{{message.author}}</h2>: 
+                <p><b>{{message.author}}</b></p>
                 {{message.content}}
+                <hr>
                 {% endfor %} 
             </div>
             
@@ -52,7 +53,7 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     <input type="text" name="chat-msg-input" id="chat-msg-input" size="100">
-                    <input type="submit" name="Send" id="">
+                    <input type="submit" name="Send" id="send">
                 </form>
             </div>
         </div>

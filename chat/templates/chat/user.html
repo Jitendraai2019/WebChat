@@ -43,11 +43,14 @@
 
         <div class="chats">
             <div class="chat-msg">
-                <p><b>Enter an exiting room or a new room </b></p>
+                <p><b>Add a new chat room.</b></p>
                 <form action="" method="POST">
                     {% csrf_token %}
                     <input id="room-name-input" type="text" size="100" name="room_name"><br><br>
-                    <input id="room-name-submit" type="button" value="Enter">   
+                    <b><label for="">Enter chat room participants name(optional) separated by space.</label></b>
+                    <input id="room-name-participants" type="text" name="room-participants"  size="100"> 
+                    <input id="room-name-submit" type="submit" value="Enter">
+                    
                 </form>
             </div>
         </div>

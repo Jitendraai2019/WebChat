@@ -6,7 +6,7 @@ body{
     height: 10%;
     width: 100%;
     
-    background-color: lightblue;
+    background-color: lightgreen;  
     display: flex;
     justify-content: space-between;
     align-items: center ;
@@ -14,7 +14,7 @@ body{
 
 .header-child1 {
     width: 40%;
-    background-color: red;
+    /* background-color: red; */
 }
 .header-child2 {
     width: 60%;
@@ -45,9 +45,9 @@ body{
 .rooms {
     height: 100%;
     width: 20%;
-    background-color: lightblue;
+    /* background-color: lightblue; */
     
-    background-color: lightgreen;
+    background-color: rgb(190, 228, 190);
 }
 .chats {
     height: 100%;
@@ -60,8 +60,6 @@ body{
 .chat-msg {
     height: 92%;
     background-image: url(chatImage.jpg);
-    background-color: lavender;
-    background-color: honeydew;
 }
 
 .chat-input {
@@ -70,6 +68,9 @@ body{
 
 #chat-msg-input {
     /* margin: 50%; */
+    height: 22px;
+    border: 1px solid;
+    padding: 2px 5px;
     background-color: white;
     background-position: 50px 100px;
     /* size: 100ex; */

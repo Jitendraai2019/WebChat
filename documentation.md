@@ -17,7 +17,7 @@
 
 # URL Designing
 ---------------
-1. Signup            -    /signup/
+1. Signup            -     /signup/
 2. Login             -     /login/
 3. Logout            -     /logout/
 4. After user Login  -     /chats/<str:username>/
