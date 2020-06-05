@@ -11,17 +11,31 @@ from django.http import HttpResponse
 def user_details(request):
     username = request.user
     rooms = Room.objects.filter(user=username)
+    # all_rooms = []
+    # participants = []
+    # for room in rooms:
+    #     all_rooms.append(room.room_name)
+    #     participants.append(room.participants.all())
+
+    # print('------------------------------')
+    # print(all_rooms, participants)
+    # print('------------------------------')
+
+    user_rooms = Room.objects.filter(participants__username=username)
+    print("------------->", user_rooms)
+
     context = {
         'user': username,
-        'rooms': rooms
+        'rooms': user_rooms
     }
+    # for room in rooms:
+        # print("testing----------------->>>>>", room.participants.all())
     if request.method == "POST":
         room_name = request.POST['room_name']
-        print('*************************')
         participants = request.POST['room-participants']
-        print('----------->>>>>', participants, type(participants))
+        # print('----------->>>>>', participants, type(participants))
         participants = participants.split()
-        print(participants)
+        # print(participants)
 
         if len(participants) == 0:
             room = Room.objects.filter(room_name=room_name)
@@ -33,16 +47,16 @@ def user_details(request):
             return render(request, 'chat/user.html', context)
         else:
             current_user = User.objects.get(username=username)
-            print('-----------')
+            # print('-----------')
             room = Room.objects.filter(room_name=room_name)
             if not room:
                 user = User.objects.get(username=username)
-                print('I am new room.', room_name, user, type(user))
+                # print('I am new room.', room_name, user, type(user))
                 new_room = Room.objects.create(room_name=room_name, user=user)
                 new_room.save()
 
                 for participant in participants:
-                    print('In for loop')
+                    # print('In for loop')
                     try:
                         temp = User.objects.get(username=participant)
                         print(temp)
@@ -59,7 +73,7 @@ def user_details(request):
                         new_user.save()
                         new_room.participant.add(new_user)
                 participants = new_room.participants.all()
-                print("participants", participants)
+                # print("participants", participants)
                 return redirect('chat:chat_room', new_room.room_name)
 
     return render(request, 'chat/user.html', context)
@@ -74,7 +88,7 @@ def chat_rooms(request, room_name):
     room = Room.objects.get(room_name=room_name)
 
     participants = room.participants.all()
-    print('participants ------->>>: ', participants)
+    # print('participants ------->>>: ', participants)
     is_participant_user = User.objects.get(username=current_user)
 
     if is_participant_user in participants:
@@ -83,8 +97,8 @@ def chat_rooms(request, room_name):
 
         if request.method == 'POST':
             msg = request.POST['chat-msg-input']
-            print(msg)
-            print(room_name)
+            # print(msg)
+            # print(room_name)
             data = Message(author=current_user, content=msg, room=room)
             data.save()
             return redirect('http://127.0.0.1:8000/chat/' + room_name + '/')

@@ -35,6 +35,7 @@
             <h1>Your chat rooms</h1>
                 {% for room in rooms %}
                 <a href="{% url 'chat:chat_room' room.room_name %}"><h3>{{room}}</h3></a>
+                
                 {% endfor%}
             {% for room in user_all_rooms %}
                 
