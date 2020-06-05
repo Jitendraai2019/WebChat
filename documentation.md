@@ -20,5 +20,5 @@
 1. Signup            -    /signup/
 2. Login             -     /login/
 3. Logout            -     /logout/
-4. After user Login  -     /chats/
-5. All Chat Rooms    -     /chats/<str:room_name>/messages
+4. After user Login  -     /chats/<str:username>/
+5. All Chat Rooms    -     /chats/<str:username>/<str:room_name>/messages/
