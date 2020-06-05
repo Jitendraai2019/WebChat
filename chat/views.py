@@ -21,7 +21,8 @@ def user_details(request):
             user = User.objects.get(username=username)
             new_room = Room.objects.create(room_name=room_name, user=user)
             new_room.save()
-        return redirect('chat:chat_room', new_room.room_name)
+            return redirect('chat:chat_room', new_room.room_name)
+        return render(request, 'chat/user.html', context)
 
     return render(request, 'chat/user.html', context)
 
