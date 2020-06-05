@@ -9,31 +9,19 @@ from django.http import HttpResponse
 
 @login_required(login_url='/login')
 def user_details(request):
+    ''''''
     username = request.user
-    rooms = Room.objects.filter(user=username)
-    # all_rooms = []
-    # participants = []
-    # for room in rooms:
-    #     all_rooms.append(room.room_name)
-    #     participants.append(room.participants.all())
-
-    # print('------------------------------')
-    # print(all_rooms, participants)
-    # print('------------------------------')
-
+    print(username, type(username))
     user_rooms = Room.objects.filter(participants__username=username)
     print("------------->", user_rooms)
-
+    current_user = User.objects.get(username=username)
     context = {
         'user': username,
-        'rooms': user_rooms
+        'room_deatails': filter_rooms_and_friends(user_rooms, current_user)
     }
-    # for room in rooms:
-        # print("testing----------------->>>>>", room.participants.all())
     if request.method == "POST":
         room_name = request.POST['room_name']
         participants = request.POST['room-participants']
-        # print('----------->>>>>', participants, type(participants))
         participants = participants.split()
         # print(participants)
 
@@ -73,7 +61,7 @@ def user_details(request):
                         new_user.save()
                         new_room.participant.add(new_user)
                 participants = new_room.participants.all()
-                # print("participants", participants)
+
                 return redirect('chat:chat_room', new_room.room_name)
 
     return render(request, 'chat/user.html', context)
@@ -83,12 +71,14 @@ def user_details(request):
 def chat_rooms(request, room_name):
     ''''''
     current_user = request.user
+    current_user = User.objects.get(username=current_user)
 
-    user_all_rooms = Room.objects.filter(user=current_user)
+    user_rooms = Room.objects.filter(participants__username=current_user)
+    room_deatails = filter_rooms_and_friends(user_rooms, current_user)
+    print('------room_deatails--------------', room_deatails)
     room = Room.objects.get(room_name=room_name)
 
     participants = room.participants.all()
-    # print('participants ------->>>: ', participants)
     is_participant_user = User.objects.get(username=current_user)
 
     if is_participant_user in participants:
@@ -97,8 +87,6 @@ def chat_rooms(request, room_name):
 
         if request.method == 'POST':
             msg = request.POST['chat-msg-input']
-            # print(msg)
-            # print(room_name)
             data = Message(author=current_user, content=msg, room=room)
             data.save()
             return redirect('http://127.0.0.1:8000/chat/' + room_name + '/')
@@ -107,10 +95,27 @@ def chat_rooms(request, room_name):
             'room_name': room_name,
             'username': current_user,
             'messages': messages,
-            'user_all_rooms': user_all_rooms
+            'rooms_details': room_deatails
         })
     else:
         print("The current use user is not allowed to send message.")
         return HttpResponse("<h1>You are an unauthorized user for this room.</h2>")
 
-    
+
+def filter_rooms_and_friends(user_rooms, current_user):
+    ''''''
+    all_rooms = []
+    participants = []
+    for room in user_rooms:
+        all_rooms.append(room.room_name)
+        print(room.room_name, type(room.room_name))
+        participants.append(room.participants.all())
+
+    friends = []
+    for users in participants:
+        for user in users:
+            if user.username != current_user.username and user.username not in friends:
+                print(user.username)
+                friends.append(user.username)
+    print(friends)
+    return zip(all_rooms, friends)

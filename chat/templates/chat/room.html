@@ -19,7 +19,7 @@
             <nav>
                 <ul class="navbar-link">
                     <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
-                    <li class="link-bar"><a class="head-ancher" href="">ChatRooms</a></li>
+                    <li class="link-bar"><a class="head-ancher" href="{% url 'chat:user_details' %}">Add ChatRoom</a></li>
                     <li class="link-bar"><a class="head-ancher" id="3" href="">
                         <form action="/logout" method="GET">
                             <button>Logout</button>
@@ -32,9 +32,9 @@
 
     <div class="container">
         <div class="rooms">
-            <h1>Your chat rooms</h1>
-            {% for room in user_all_rooms %}
-                <a href="{% url 'chat:chat_room' room.room_name %}"><h3>{{room}}</h3></a>
+            <h1>Friends</h1>
+            {% for room_name, friend in rooms_details %}
+                <a href="{% url 'chat:chat_room' room_name %}"><h3>{{friend}}</h3></a>
                 
             {% endfor %}
         </div>
