@@ -1,66 +1,127 @@
 {% load static %}
-<html lang="en">
+<!DOCTYPE html><html class=''>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'room.css' %}">
+<title>Justchat</title>
+<script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="https://use.typekit.net/hoy3lrg.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+<link rel="stylesheet" href="{% static 'room.css' %}">
+
 </head>
+
 <body>
-     
-    <header class="header-main">
 
-        <div id="header-child1">
-            <a href="{% url 'user:home' %}"><h1 id="logo">Justchat</h1></a>
-        </div>
+  <header class="header-main">
 
-        <div class="header-child2">
-            
-            <nav>
-                <ul class="navbar-link">
-                    <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
-                    <li class="link-bar"><a class="head-ancher" href="{% url 'chat:user_details' %}">Add ChatRoom</a></li>
-                    <li class="link-bar"><a class="head-ancher" id="3" href="">
-                        <form action="/logout" method="GET">
-                            <button>Logout</button>
-                        </form>
-                    </a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="rooms">
-            <h1>Friends</h1>
-            {% for room_name, friend in rooms_details %}
-                <a href="{% url 'chat:chat_room' room_name %}"><h3>{{friend}}</h3></a>
-                
-            {% endfor %}
-        </div>
-
-        <div class="chats">
-            <div class="chat-msg">
-                
-                {% for message in messages %}
-                <p><b>{{message.author}}</b></p>
-                {{message.content}}
-                <hr>
-                {% endfor %} 
-            </div>
-            
-            <div class="chat-input">
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <input type="text" name="chat-msg-input" id="chat-msg-input" size="100">
-                    <input type="submit" name="Send" id="send">
-                </form>
-            </div>
-        </div>
+    <div id="header-child1">
+        <a href="{% url 'user:home' %}"><h1 id="logo">Justchat</h1></a>
     </div>
-    <div></div>
 
-<!-- changes in UI -->
+    <div class="header-child2">
+        <nav>
+            <ul class="navbar-link">
+                <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
+                <li class="link-bar"><a class="head-ancher" href="{% url 'chat:user_details' %}">Add ChatRoom</a></li>
+                <li class="link-bar"><a class="head-ancher" id="3" href="">
+                    <form action="/logout" method="GET">
+                        <button>Logout</button>
+                    </form>
+                </a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-</body>
-</html>
+
+<div id="frame">
+	<div id="sidepanel">
+		<div id="profile">
+			<div class="wrap">
+				<!-- <img id="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRUa2sh0F0f8dxjVGnXw8CHUgqHTwJ61Vj5Qq-h-pks7zD9clP7&usqp=CAU" class="online" alt="" /> -->
+				<p>{{username}}</p>
+				<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+			</div>
+		</div>
+		<div id="search">
+			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+			<input type="text" placeholder="Search contacts..." />
+		</div>
+		<div id="contacts">
+			<ul>
+
+        {% for room_name, friend in rooms_details %}
+          <li class="contact">
+            <div class="wrap">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRUa2sh0F0f8dxjVGnXw8CHUgqHTwJ61Vj5Qq-h-pks7zD9clP7&usqp=CAU" alt="" />
+              <div class="meta">
+                <p class="name"><a href="{% url 'chat:chat_room' room_name %}">{{friend}}</a></p>
+                <!-- for latest message -->
+                <p class="preview"></p> 
+              </div>
+            </div>
+          </li>
+        {% endfor %}    	
+			</ul>
+		</div>
+		<div id="bottom-bar">
+			<button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+			<button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+		</div>
+	</div>
+	<div class="content">
+		<div class="contact-profile">
+			<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRUa2sh0F0f8dxjVGnXw8CHUgqHTwJ61Vj5Qq-h-pks7zD9clP7&usqp=CAU" alt="" />
+      <p>friend name</p>
+    </div>
+    
+    <!-- all messages are shown in this section -->
+		<div class="messages">
+			<ul>
+  
+        {% for message in messages %}
+          {% if message.author != username %}
+
+            <li class="sent">
+                <p>{{message.author}} : {{message.content}}</p>
+            </li>
+          {% else %}
+           
+            <li class="replies">
+              <p>{{message.content}}</p>
+            </li>
+            
+          {% endif %}
+        {% endfor %}
+			
+			</ul>
+    </div>
+  
+		<div class="message-input">
+			<div class="wrap">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <input type="text" name="chat-msg-input" placeholder="Write your message..." />
+          <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+          <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </form>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+
+</body></html>

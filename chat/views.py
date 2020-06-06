@@ -86,7 +86,7 @@ def chat_rooms(request, room_name):
 
     if is_participant_user in participants:
         print("The current user is allowed to send message")
-        messages = Message.objects.filter(room=room).order_by('-timestamp').all()[:6]
+        messages = Message.objects.filter(room=room).order_by('-timestamp').all()
 
         if request.method == 'POST':
             msg = request.POST['chat-msg-input']
@@ -98,11 +98,13 @@ def chat_rooms(request, room_name):
             'room_name': room_name,
             'username': current_user,
             'messages': reversed(messages),
-            'rooms_details': room_deatails
+            'rooms_details': room_deatails,
+            'participants': '',
+            'group_name': ''
         })
     else:
         print("The current use user is not allowed to send message.")
-        return HttpResponse("<h1>You are an unauthorized user for this room.</h2>")
+        return HttpResponse("<h1>You are an unauthorized user for this room.</h1>")
 
 
 def filter_rooms_and_friends(user_rooms, current_user):
