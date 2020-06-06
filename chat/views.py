@@ -11,9 +11,9 @@ from django.http import HttpResponse
 def user_details(request):
     ''''''
     username = request.user
-    print(username, type(username))
+    # print(username, type(username))
     user_rooms = Room.objects.filter(participants__username=username)
-    print("------------->", user_rooms)
+    # print("------------->", user_rooms)
     current_user = User.objects.get(username=username)
     context = {
         'user': username,
@@ -23,7 +23,7 @@ def user_details(request):
         room_name = request.POST['room_name']
         participants = request.POST['room-participants']
         participants = participants.split()
-        # print(participants)
+        # print('------------>',participants)
 
         if len(participants) == 0:
             room = Room.objects.filter(room_name=room_name)
@@ -51,7 +51,7 @@ def user_details(request):
                     except:
                         temp = User.objects.create(username=participant)
                         temp.save()
-                        print(temp)
+                        # print(temp)
                     all_user = User.objects.all()
                     
                     if temp in all_user:
@@ -61,6 +61,9 @@ def user_details(request):
                         new_user.save()
                         new_room.participant.add(new_user)
                 participants = new_room.participants.all()
+                print('------------------------')
+                print(participants)
+                print('------------------------')
 
                 return redirect('chat:chat_room', new_room.room_name)
 
@@ -75,7 +78,7 @@ def chat_rooms(request, room_name):
 
     user_rooms = Room.objects.filter(participants__username=current_user)
     room_deatails = filter_rooms_and_friends(user_rooms, current_user)
-    print('------room_deatails--------------', room_deatails)
+    # print('------room_deatails--------------', room_deatails)
     room = Room.objects.get(room_name=room_name)
 
     participants = room.participants.all()
@@ -89,12 +92,12 @@ def chat_rooms(request, room_name):
             msg = request.POST['chat-msg-input']
             data = Message(author=current_user, content=msg, room=room)
             data.save()
-            return redirect('http://127.0.0.1:8000/chat/' + room_name + '/')
+            return redirect('chat:chat_room', room.room_name)
 
         return render(request, 'chat/room.html', {
             'room_name': room_name,
             'username': current_user,
-            'messages': messages,
+            'messages': reversed(messages),
             'rooms_details': room_deatails
         })
     else:
@@ -106,16 +109,38 @@ def filter_rooms_and_friends(user_rooms, current_user):
     ''''''
     all_rooms = []
     participants = []
+    # print('------------------------')
+    # print('<--------user room-------->', user_rooms)
+    # print('-----------------------')
     for room in user_rooms:
         all_rooms.append(room.room_name)
-        print(room.room_name, type(room.room_name))
+        # print(room.room_name, type(room.room_name))
         participants.append(room.participants.all())
 
     friends = []
+    # print('-------participands length-------->', len(participants), len(user_rooms))
+    print('*************************')
+    print(participants)
+    # participants = set(participants)
+    print(len(participants))
+    print('***********************')
     for users in participants:
-        for user in users:
-            if user.username != current_user.username and user.username not in friends:
-                print(user.username)
-                friends.append(user.username)
-    print(friends)
+        # print('-------------------')
+        print(len(users))
+        if len(users) == 2:
+            for user in users:
+                if user.username != current_user.username and user.username not in friends:
+                    # print(user.username)
+                    friends.append(user.username)
+        elif len(users) >= 3:
+            temp = ''
+            for user in users:
+                # if user.username != current_user.username and user.username not in friends:
+                    # print(user.username)
+                temp += ' ' + user.username
+            friends.append(temp)
+
+    # print(friends)
+    # print('------all_romms---', all_rooms)
+    print(len(all_rooms), len(friends))
     return zip(all_rooms, friends)
