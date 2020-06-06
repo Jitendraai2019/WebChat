@@ -82,6 +82,12 @@ def chat_rooms(request, room_name):
     room = Room.objects.get(room_name=room_name)
 
     participants = room.participants.all()
+    print('************---------*********************')
+    print(participants)
+    print(current_user, type(current_user))
+    participants_name = filter_participants(current_user, participants)
+    print(participants_name)
+    print('************---------*********************')
     is_participant_user = User.objects.get(username=current_user)
 
     if is_participant_user in participants:
@@ -99,7 +105,7 @@ def chat_rooms(request, room_name):
             'username': current_user,
             'messages': reversed(messages),
             'rooms_details': room_deatails,
-            'participants': '',
+            'participants': participants_name,
             'group_name': ''
         })
     else:
@@ -146,3 +152,21 @@ def filter_rooms_and_friends(user_rooms, current_user):
     # print('------all_romms---', all_rooms)
     print(len(all_rooms), len(friends))
     return zip(all_rooms, friends)
+
+
+def filter_participants(current_user, participants):
+    '''
+    parameters:
+        participants (QuerySET): All participants of a room.
+    '''
+    friend_name = ''
+    group_name = ""
+    if len(participants) == 2:
+        for participant in participants:
+            if participant != current_user:
+                friend_name = participant.username
+        return friend_name
+    else:
+        for participant in participants:
+            group_name += ' ' + participant.username
+        return group_name
