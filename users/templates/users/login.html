@@ -4,54 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'room.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+
+    <style>
+        .box {
+            position: relative;
+            top: 15%;
+            left: 23%;
+            height: 70%;
+            width: 50%; 
+            background-color: white;
+        }
+    h1{
+        font-family: Helvetica;
+    }
+
+    </style>
 </head>
 <body>
-   
-    <div>
-
-        <header class="header-main">
+    <div class="frame">
+        <header>
 
             <div id="header-child1">
-                <!-- <h1 id="logo">Justchat</h1>  -->
-                <a href="http://127.0.0.1:8000/"><h1 id="logo">Justchat</h1></a>
+                <form action="" method="GET">
+                    <a href=""><h1 id="logo">JustChat</h1></a>             
+                </form>
             </div>
-    
-            <div class="header-child2">
-                
-                <nav>
-                    <ul class="navbar-link">
-                        <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
-                        <li class="link-bar"><a class="head-ancher" href="">ChatRooms</a></li>
-                        <li class="link-bar"><a class="head-ancher" id="3" href="">
-                            <form action="/logout" method="GET">
-                                <button>Logout</button>
-                            </form>
-                        </a></li>
-                    </ul>
-                </nav>
-            </div>
+
+            <div id="header-child2">
+                <div>
+                    <form action="/signup" method="GET">
+                        <button class="btn">Register</button>
+                    </form>       
+                </div>
+            </div>  
         </header>
-    
-
-        <form action="" method="POST">
-            {% csrf_token %}
-            <fieldset>
-                <p>LogIn</p>
-                <div>
-                    <input type="text" name="username" id="username" placeholder="username">
-                </div>
-                
-                <div>
-                    <input type="password" name="password" id="password" placeholder="password">
-                </div>
         
-                <div>
-                    <input type="submit" value="LogIn">
-                </div>
-            </fieldset>
-        </form>
+        <div class="content">
+            <div class="box">
+                <form action="" style="border:1px solid #ccc" method="POST">
+                    {% csrf_token %} 
+                    <div class="container">
+                      <h1>Please Login</h1>
+                  
+                      <hr>
+                      <input type="text" placeholder="username" name="username" required>
+                      <input type="password" placeholder="Enter Password" name="password" required>
+                      <label>
+                        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+                      </label>
+                      
+                      <div class="clearfix">
+                            <button type="button" class="cancelbtn">Cancel</button>
+                            <button type="submit" class="signupbtn">Login</button>
+                      </div>
+                    </div>
+                  </form>
+            </div>
+        </div>
+        
     </div>
-
 </body>
 </html>
