@@ -4,55 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JustChat</title>
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     
 </head>
 <body>
-    <div>
-
-        <header class="header-main">
+    <div class="frame">
+        <header>
 
             <div id="header-child1">
                 <form action="" method="GET">
-                    <a href=""><h1 id="logo">Justchat</h1></a>             
+                    <a href=""><h1 id="logo">JustChat</h1></a>             
                 </form>
             </div>
-            <div class="header-child2">
-                
-                <nav>
-                    <ul class="navbar-link">
-                        {% if user %}
-                            <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
-                            <li class="link-bar"><a class="head-ancher" href="http://127.0.0.1:8000/chat/">Start Chatting</a></li>
-                        {% endif %}
-                        
-                        <li class="link-bar"><a class="head-ancher" id="3" href="">
-                            <form action="/logout" method="GET">
-                                <button>Logout</button>
-                            </form>
-                        </a></li>
-                    </ul>
-                </nav>
+
+            <div id="header-child2">    
+                <div>
+                    <form action="/signup" method="GET">
+                        <button class="btn">Register</button>
+                    </form>       
+                </div>
+                <div>
+                    <form action="/login" method="GET">
+                        <button class="btn">Login</button>
+                    </form>       
+                </div>
             </div>  
         </header>
-    
-
         
-    
-        <form action="/signup" method="GET">
-            <button>signUp</button>
-        </form>
-        <form action="/login" method="GET">
-            <button>Login</button>
-        </form>
-        <br>
-        <br>
-        <!-- <a href="">signUp</a> -->
-    </div>
+        <div class="content">
 
-    <div class="image-body">
-        <h1>Hello testing</h1>
+        </div>
+        
     </div>
-
 </body>
 </html>
