@@ -605,7 +605,7 @@ body{
   height: auto;
   min-height: calc(100% - 93px);
   max-height: calc(100% - 93px);
-  overflow-y: scroll;
+  overflow-y: initial;
   overflow-x: hidden;
 }
 @media screen and (max-width: 735px) {

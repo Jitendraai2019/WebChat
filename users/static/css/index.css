@@ -1,0 +1,73 @@
+.header-main {
+    height: 15%;
+    width: 100%;
+    
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center ;
+}
+
+.header-child1 {
+    width: 40%;
+    background-color: red;
+}
+.header-child2 {
+    width: 60%;
+    /* background-color: grey; */
+}
+
+.navbar-link {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#logo {
+    padding-left: 20%;
+    font-size: 300%;
+    /* text-align: center; */
+    font-weight: bold;
+    font: bolder;
+    color:#354463;
+    font-family: Helvetica;
+}
+
+.container {
+    height: 85%;
+    
+    background-color: hotpink;
+    display: flex;
+}
+.rooms {
+    height: 100%;
+    width: 20%;
+    background-color: lightblue;
+    
+    background-color: lightgreen;
+}
+.chats {
+    height: 100%;
+    width: 80%;
+    background-color: khaki;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-msg {
+    height: 92%;
+    background-image: url(chatImage.jpg);
+    background-color: lavender;
+    background-color: honeydew;
+}
+
+.chat-input {
+    height: 5%;
+}
+
+#chat-msg-input {
+    background-color: white;
+    background-position: 50px 100px;
+    /* size: 100ex; */
+    background-repeat: no-repeat;
+   
+}

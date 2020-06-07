@@ -82,12 +82,7 @@ def chat_rooms(request, room_name):
     room = Room.objects.get(room_name=room_name)
 
     participants = room.participants.all()
-    print('************---------*********************')
-    print(participants)
-    print(current_user, type(current_user))
     participants_name = filter_participants(current_user, participants)
-    print(participants_name)
-    print('************---------*********************')
     is_participant_user = User.objects.get(username=current_user)
 
     if is_participant_user in participants:
@@ -117,40 +112,29 @@ def filter_rooms_and_friends(user_rooms, current_user):
     ''''''
     all_rooms = []
     participants = []
-    # print('------------------------')
-    # print('<--------user room-------->', user_rooms)
-    # print('-----------------------')
     for room in user_rooms:
         all_rooms.append(room.room_name)
-        # print(room.room_name, type(room.room_name))
         participants.append(room.participants.all())
 
     friends = []
-    # print('-------participands length-------->', len(participants), len(user_rooms))
-    print('*************************')
-    print(participants)
-    # participants = set(participants)
-    print(len(participants))
-    print('***********************')
     for users in participants:
-        # print('-------------------')
+        print('-------------------')
         print(len(users))
+        print(users)
         if len(users) == 2:
             for user in users:
-                if user.username != current_user.username and user.username not in friends:
-                    # print(user.username)
+                if user.username != current_user.username:
                     friends.append(user.username)
-        elif len(users) >= 3:
+        else:
             temp = ''
             for user in users:
-                # if user.username != current_user.username and user.username not in friends:
-                    # print(user.username)
                 temp += ' ' + user.username
+            print(temp)
             friends.append(temp)
+        print(len(friends))
 
-    # print(friends)
-    # print('------all_romms---', all_rooms)
     print(len(all_rooms), len(friends))
+    print(friends)
     return zip(all_rooms, friends)
 
 
