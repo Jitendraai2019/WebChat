@@ -32,7 +32,7 @@
         <nav>
             <ul class="navbar-link">
                 <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
-                <li class="link-bar"><a class="head-ancher" href="{% url 'chat:user_details' %}">Add ChatRoom</a></li>
+                <li class="link-bar"><a class="head-ancher" href="{% url 'chat:user_details' username %}">Add ChatRoom</a></li>
                 <li class="link-bar"><a class="head-ancher" id="3" href="">
                     <form action="/logout" method="GET">
                         <button>Logout</button>
@@ -65,7 +65,7 @@
             <div class="wrap">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRUa2sh0F0f8dxjVGnXw8CHUgqHTwJ61Vj5Qq-h-pks7zD9clP7&usqp=CAU" alt="" />
               <div class="meta">
-                <p class="name"><a href="{% url 'chat:chat_room' room_name %}">{{friend}}</a></p>
+                <p class="name"><a href="{% url 'chat:chat_rooms' username room_name %}">{{friend}}</a></p>
                 <!-- for latest message -->
                 <p class="preview"></p> 
               </div>

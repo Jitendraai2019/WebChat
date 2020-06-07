@@ -9,8 +9,7 @@
 <body>
     <header class="header-main">
         <div id="header-child1">
-            <!-- <h1 id="logo">Justchat</h1>  -->
-            <a href="http://127.0.0.1:8000/"><h1 id="logo">Justchat</h1></a>
+            <h1 id="logo">Justchat</h1>
         </div>
 
         <div class="header-child2">
@@ -34,7 +33,7 @@
         <div class="rooms">
             <h1>Friends</h1>
                 {% for room_name, friend in room_deatails %}
-                <a href="{% url 'chat:chat_room' room_name %}"><h3>{{friend}}</h3></a>
+                <a href="{% url 'chat:chat_rooms' user room_name %}"><h3>{{friend}}</h3></a>
                 
                 {% endfor%}
             {% for room in user_all_rooms %}

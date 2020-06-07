@@ -8,7 +8,7 @@ from django.http import HttpResponse
 
 
 @login_required(login_url='/login')
-def user_details(request):
+def user_details(request, username):
     ''''''
     username = request.user
     # print(username, type(username))
@@ -16,7 +16,7 @@ def user_details(request):
     # print("------------->", user_rooms)
     current_user = User.objects.get(username=username)
     context = {
-        'user': username,
+        'user': current_user,
         'room_deatails': filter_rooms_and_friends(user_rooms, current_user)
     }
     if request.method == "POST":
@@ -65,20 +65,18 @@ def user_details(request):
                 print(participants)
                 print('------------------------')
 
-                return redirect('chat:chat_room', new_room.room_name)
+                return redirect('chat:chat_room', username, new_room.room_name)
 
     return render(request, 'chat/user.html', context)
 
 
 @login_required(login_url='/login')
-def chat_rooms(request, room_name):
+def chat_rooms(request, username, room_name):
     ''''''
-    current_user = request.user
-    current_user = User.objects.get(username=current_user)
-
+    username = request.user
+    current_user = User.objects.get(username=username)
     user_rooms = Room.objects.filter(participants__username=current_user)
     room_deatails = filter_rooms_and_friends(user_rooms, current_user)
-    # print('------room_deatails--------------', room_deatails)
     room = Room.objects.get(room_name=room_name)
 
     participants = room.participants.all()
