@@ -170,3 +170,15 @@ def filter_participants(current_user, participants):
         for participant in participants:
             group_name += ' ' + participant.username
         return group_name
+
+
+@login_required(login_url='/login')
+def update_room(request, username, room_name):
+    ''''''
+    return HttpResponse('Hello! I am an updation of room.')
+
+
+@login_required(login_url='/login')
+def delete_room(request, username, room_name):
+    ''''''
+    return HttpResponse("Hello! I am to delete the room.")

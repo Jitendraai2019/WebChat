@@ -34,7 +34,7 @@
 
     <div id="header-child1">
         <form action="" method="GET">
-            <a href=""><h1 id="logo">JustChat</h1></a>             
+            <a href="{% url 'chat:get_rooms' username %}"><h1 id="logo">JustChat</h1></a>             
         </form>
     </div>
 
@@ -77,6 +77,8 @@
               <div class="meta">
                 <p class="name"><a href="{% url 'chat:chat_rooms' username room_name %}">{{friend}}</a></p>
                 <a href="">{{room_name}}</a>
+                <a href="{% url 'chat:update_room' username room_name %}">Update</a>
+                <a href="{% url 'chat:delete_room' username room_name %}">Delete</a>
                 <!-- for latest message -->
                 <p class="preview"></p> 
               </div>
