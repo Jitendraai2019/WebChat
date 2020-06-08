@@ -16,7 +16,7 @@ def user_details(request, username):
     # print("------------->", user_rooms)
     current_user = User.objects.get(username=username)
     context = {
-        'user': current_user,
+        'username': current_user,
         'room_deatails': filter_rooms_and_friends(user_rooms, current_user)
     }
     if request.method == "POST":
@@ -65,9 +65,27 @@ def user_details(request, username):
                 print(participants)
                 print('------------------------')
 
-                return redirect('chat:chat_room', username, new_room.room_name)
+                return redirect('chat:chat_rooms', username, new_room.room_name)
 
     return render(request, 'chat/user.html', context)
+
+
+
+@login_required(login_url='/login')
+def get_rooms(request, username):
+    ''''''
+    username = request.user
+    current_user = User.objects.get(username=username)
+    user_rooms = Room.objects.filter(participants__username=current_user)
+    room_details = filter_rooms_and_friends(user_rooms, current_user)
+
+    context = {
+        'username': current_user,
+        'rooms_details': room_details,
+        # 'participants': participants_name,
+    }
+    # return HttpResponse('<h1>I am having all the rooms.</h1>')
+    return render(request, 'chat/room.html', context)
 
 
 @login_required(login_url='/login')

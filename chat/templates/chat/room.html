@@ -16,33 +16,43 @@
 <script src="https://use.typekit.net/hoy3lrg.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
-<link rel="stylesheet" href="{% static 'room.css' %}">
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+<link rel="stylesheet" href="{% static 'css/room.css' %}">
 
+<style>
+  header{
+    height: 15%;
+    /* background-color: #32465a; */
+    background-color: #32465a;
+  }
+</style>
 </head>
 
 <body>
 
-  <header class="header-main">
+  <header>
 
     <div id="header-child1">
-        <a href="{% url 'user:home' %}"><h1 id="logo">Justchat</h1></a>
+        <form action="" method="GET">
+            <a href=""><h1 id="logo">JustChat</h1></a>             
+        </form>
     </div>
 
-    <div class="header-child2">
-        <nav>
-            <ul class="navbar-link">
-                <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
-                <li class="link-bar"><a class="head-ancher" href="{% url 'chat:user_details' username %}">Add ChatRoom</a></li>
-                <li class="link-bar"><a class="head-ancher" id="3" href="">
-                    <form action="/logout" method="GET">
-                        <button>Logout</button>
-                    </form>
-                </a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+    <div id="header-child2">    
+        <div>
+            <form action="{% url 'chat:user_details' username %}" method="GET">
+              <!-- <li class="link-bar"><a class="head-ancher" href="{% url 'chat:user_details' username %}">Add ChatRoom</a></li> -->
+                <button class="btn">Add chat rooms</button>
+            </form>       
+        </div>
+        <div>
+            <form action="/logout" method="GET">
+                <button class="btn">Logout</button>
+            </form>
 
+        </div>
+    </div>  
+  </header>
 
 <div id="frame">
 	<div id="sidepanel">
@@ -66,6 +76,7 @@
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRUa2sh0F0f8dxjVGnXw8CHUgqHTwJ61Vj5Qq-h-pks7zD9clP7&usqp=CAU" alt="" />
               <div class="meta">
                 <p class="name"><a href="{% url 'chat:chat_rooms' username room_name %}">{{friend}}</a></p>
+                <a href="">{{room_name}}</a>
                 <!-- for latest message -->
                 <p class="preview"></p> 
               </div>
@@ -134,3 +145,25 @@
 
 
 </body></html>
+
+
+<!-- <header class="header-main">
+
+  <div id="header-child1">
+      <a href="{% url 'user:home' %}"><h1 id="logo">Justchat</h1></a>
+  </div>
+
+  <div class="header-child2">
+      <nav>
+          <ul class="navbar-link">
+              <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
+              <li class="link-bar"><a class="head-ancher" href="{% url 'chat:user_details' username %}">Add ChatRoom</a></li>
+              <li class="link-bar"><a class="head-ancher" id="3" href="">
+                  <form action="/logout" method="GET">
+                      <button>Logout</button>
+                  </form>
+              </a></li>
+          </ul>
+      </nav>
+  </div>
+</header> -->

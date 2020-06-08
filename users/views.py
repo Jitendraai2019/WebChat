@@ -41,7 +41,7 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
-            return redirect('chat:user_details', username)
+            return redirect('chat:get_rooms', username)
 
     return render(request, 'users/login.html')
 

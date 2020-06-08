@@ -4,55 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Justchat</title>
-    <link rel="stylesheet" href="{% static 'room.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user.css' %}">
+
+    <style>
+        header{
+            height: 12%;
+        }
+    </style>
 </head>
 <body>
-    <header class="header-main">
+    <header>
+
         <div id="header-child1">
-            <h1 id="logo">Justchat</h1>
+            <form action="" method="GET">
+                <a href=""><h1 id="logo">JustChat</h1></a>             
+            </form>
         </div>
 
-        <div class="header-child2">
-            
-            <nav>
-                <ul class="navbar-link">
-                    <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
-                    <li class="link-bar"><a class="head-ancher" href="">ChatRooms</a></li>
-                    <li class="link-bar"><a class="head-ancher" id="3" href="">
-                        <form action="/logout" method="GET">
-                            <button>Logout</button>
-                        </form>
-                    </a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-  
-    <div class="container">
-        <div class="rooms">
-            <h1>Friends</h1>
-                {% for room_name, friend in room_deatails %}
-                <a href="{% url 'chat:chat_rooms' user room_name %}"><h3>{{friend}}</h3></a>
-                
-                {% endfor%}
-            {% for room in user_all_rooms %}
-                
-            {% endfor %}
-        </div>
-
-        <div class="chats">
-            <div class="chat-msg">
-                <p><b>Add a new chat room.</b></p>
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <input id="room-name-input" type="text" size="100" name="room_name" required><br><br>
-                    <b><label for="">Please add your name and participant name separated by space.</label></b>
-                    <input id="room-name-participants" type="text" name="room-participants"  size="100" required> 
-                    <input id="room-name-submit" type="submit" value="Enter">
-                    
-                </form>
+        <div id="header-child2">    
+            <div>
+                <form action="" method="">
+                    <button class="btn">Hi {{username}}!</button>
+                </form>       
             </div>
+            <div class="part2">
+                <form action="/logout" method="GET">
+                    <button class="btn">Logout</button>
+                </form>
+
+            </div>
+        </div>  
+    </header>
+  
+    <div class="container1">
+        <div class="rooms">
+        
+        </div>
+
+        <div class="add-room-box">
+            <form action="" style="border:1px solid #ccc" method="POST">
+                {% csrf_token %}
+                <div class="container">
+                  <h1>Room Detail</h1>
+                  <p>Note: Room name should be unique</p>
+                  <hr>
+              
+                  <label for="email"><b>Room Name</b></label>
+                  <input type="text" placeholder="Enter room name" name="room_name" required>
+              
+                  <label for="psw"><b>Please add your name and participants name separated by space.</b></label>
+                  <input type="text" placeholder="Room participants" name="room-participants" required>
+        
+                  <div class="clearfix">
+                    <button type="button" class="cancelbtn">Cancel</button>
+                    <button type="submit" class="signupbtn">Add Room</button>
+                  </div>
+                </div>
+              </form>
         </div>
     </div>
 
