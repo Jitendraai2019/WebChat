@@ -109,7 +109,7 @@ def chat_rooms(request, username, room_name):
             msg = request.POST['chat-msg-input']
             data = Message(author=current_user, content=msg, room=room)
             data.save()
-            return redirect('chat:chat_room', room.room_name)
+            return redirect('chat:chat_rooms', username, room.room_name)
 
         return render(request, 'chat/room.html', {
             'room_name': room_name,
@@ -175,10 +175,25 @@ def filter_participants(current_user, participants):
 @login_required(login_url='/login')
 def update_room(request, username, room_name):
     ''''''
+    current_user = User.objects.get(username=username)
+    print(current_user, type(current_user))
     return HttpResponse('Hello! I am an updation of room.')
 
 
 @login_required(login_url='/login')
 def delete_room(request, username, room_name):
     ''''''
-    return HttpResponse("Hello! I am to delete the room.")
+    current_user = User.objects.get(username=username)
+    print(current_user, type(current_user))
+    print(room_name)
+    room_name = Room.objects.get(room_name=room_name)
+    print(room_name, type(room_name))
+    temp = room_name.participants.all()
+    print(temp)
+    print(room_name, type(room_name))
+    room_name.participants.remove(current_user)
+    
+    print('----------->', current_user.username, type(current_user.username))
+
+    # return HttpResponse("Hello! I am to delete the room.")
+    return redirect('chat:get_rooms', current_user.username)

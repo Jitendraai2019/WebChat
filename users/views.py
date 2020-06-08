@@ -27,12 +27,14 @@ def signup(request):
             new_user.save()
             return redirect('user:login')
 
-    return render(request, 'users/signup.html')
+    return render(request, 'users/signup.html', {})
 
 
 def user_login(request):
     '''
     '''
+    username = request.user
+    print('----------->', username)
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -43,7 +45,7 @@ def user_login(request):
             login(request, user)
             return redirect('chat:get_rooms', username)
 
-    return render(request, 'users/login.html')
+    return render(request, 'users/login.html', {'username': username})
 
 
 def user_logout(request):
