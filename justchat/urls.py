@@ -21,4 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('', include('chat.urls')),
+
+    #  rest_framwork api
+    path('api/chat/', include('chat.api.urls', 'chat_url_api'))
 ]
