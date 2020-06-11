@@ -11,9 +11,7 @@ from django.http import HttpResponse
 def user_details(request, username):
     ''''''
     username = request.user
-    # print(username, type(username))
     user_rooms = Room.objects.filter(participants__username=username)
-    # print("------------->", user_rooms)
     current_user = User.objects.get(username=username)
     context = {
         'username': current_user,
@@ -23,7 +21,6 @@ def user_details(request, username):
         room_name = request.POST['room_name']
         participants = request.POST['room-participants']
         participants = participants.split()
-        # print('------------>',participants)
 
         if len(participants) == 0:
             room = Room.objects.filter(room_name=room_name)
@@ -35,23 +32,18 @@ def user_details(request, username):
             return render(request, 'chat/user.html', context)
         else:
             current_user = User.objects.get(username=username)
-            # print('-----------')
             room = Room.objects.filter(room_name=room_name)
             if not room:
                 user = User.objects.get(username=username)
-                # print('I am new room.', room_name, user, type(user))
                 new_room = Room.objects.create(room_name=room_name, user=user)
                 new_room.save()
 
                 for participant in participants:
-                    # print('In for loop')
                     try:
                         temp = User.objects.get(username=participant)
-                        print(temp)
                     except:
                         temp = User.objects.create(username=participant)
                         temp.save()
-                        # print(temp)
                     all_user = User.objects.all()
                     
                     if temp in all_user:
@@ -61,9 +53,6 @@ def user_details(request, username):
                         new_user.save()
                         new_room.participant.add(new_user)
                 participants = new_room.participants.all()
-                print('------------------------')
-                print(participants)
-                print('------------------------')
 
                 return redirect('chat:chat_rooms', username, new_room.room_name)
 
@@ -82,9 +71,8 @@ def get_rooms(request, username):
     context = {
         'username': current_user,
         'rooms_details': room_details,
-        # 'participants': participants_name,
     }
-    # return HttpResponse('<h1>I am having all the rooms.</h1>')
+
     return render(request, 'chat/room.html', context)
 
 
@@ -110,7 +98,8 @@ def chat_rooms(request, username, room_name):
             data = Message(author=current_user, content=msg, room=room)
             data.save()
             return redirect('chat:chat_rooms', username, room.room_name)
-
+        print('&*&&&&&&&&&&&&&&&&&&&&&&&&&&: room_name ', room_name, type(room_name))
+        print(current_user.username, type(current_user.username))
         return render(request, 'chat/room.html', {
             'room_name': room_name,
             'username': current_user,
@@ -182,10 +171,9 @@ def update_room(request, username, room_name):
 
 @login_required(login_url='/login')
 def delete_room(request, username, room_name):
-    ''''''
+    '''
+    '''
     current_user = User.objects.get(username=username)
-    print(current_user, type(current_user))
-    print(room_name)
     room_name = Room.objects.get(room_name=room_name)
     print(room_name, type(room_name))
     temp = room_name.participants.all()
@@ -193,7 +181,16 @@ def delete_room(request, username, room_name):
     print(room_name, type(room_name))
     room_name.participants.remove(current_user)
     
-    print('----------->', current_user.username, type(current_user.username))
-
-    # return HttpResponse("Hello! I am to delete the room.")
     return redirect('chat:get_rooms', current_user.username)
+
+
+@login_required(login_url='/login')
+def search_room(request, username, room_name):
+    '''
+    '''
+    print('-=---------testing------->>>>', username, room_name)
+    if request.method == "POST":
+        
+        return HttpResponse('<h1> I am a search page </h1>')
+    else:
+        return HttpResponse('<h1> I am not the search page by post method. </h1>')

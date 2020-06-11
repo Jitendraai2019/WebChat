@@ -64,8 +64,11 @@
 			</div>
 		</div>
 		<div id="search">
-			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-			<input type="text" placeholder="Search contacts..." />
+      <form action="{% url 'chat:search_room' username room_name %}" method="POST">
+        {% csrf_token %}
+        <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+        <input type="text" placeholder="Search contacts..." />
+      </form>
 		</div>
 		<div id="contacts">
 			<ul>
@@ -122,7 +125,7 @@
   
 		<div class="message-input">
 			<div class="wrap">
-        <form action="" method="POST">
+        <form action="{% url 'chat:chat_rooms' username room_name %}" method="POST">
           {% csrf_token %}
           <input type="text" name="chat-msg-input" placeholder="Write your message..." />
           <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
@@ -146,26 +149,5 @@
 
 
 
-</body></html>
-
-
-<!-- <header class="header-main">
-
-  <div id="header-child1">
-      <a href="{% url 'user:home' %}"><h1 id="logo">Justchat</h1></a>
-  </div>
-
-  <div class="header-child2">
-      <nav>
-          <ul class="navbar-link">
-              <li class="link-bar"><a class="head-ancher" href="">{{user}}</a></li>
-              <li class="link-bar"><a class="head-ancher" href="{% url 'chat:user_details' username %}">Add ChatRoom</a></li>
-              <li class="link-bar"><a class="head-ancher" id="3" href="">
-                  <form action="/logout" method="GET">
-                      <button>Logout</button>
-                  </form>
-              </a></li>
-          </ul>
-      </nav>
-  </div>
-</header> -->
+  </body>
+</html>
