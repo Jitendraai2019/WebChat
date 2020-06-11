@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 # from django.urls import reverse
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+import requests
 
 
 @login_required(login_url='/login')
@@ -71,6 +72,7 @@ def get_rooms(request, username):
     context = {
         'username': current_user,
         'rooms_details': room_details,
+        'room_name': ' '
     }
 
     return render(request, 'chat/room.html', context)
@@ -98,8 +100,7 @@ def chat_rooms(request, username, room_name):
             data = Message(author=current_user, content=msg, room=room)
             data.save()
             return redirect('chat:chat_rooms', username, room.room_name)
-        print('&*&&&&&&&&&&&&&&&&&&&&&&&&&&: room_name ', room_name, type(room_name))
-        print(current_user.username, type(current_user.username))
+
         return render(request, 'chat/room.html', {
             'room_name': room_name,
             'username': current_user,
@@ -188,9 +189,15 @@ def delete_room(request, username, room_name):
 def search_room(request, username, room_name):
     '''
     '''
-    print('-=---------testing------->>>>', username, room_name)
     if request.method == "POST":
+        room_search = request.POST['room_name']
+        # print(room_search)
+        response = requests.get("http://127.0.0.1:8000/api/chat/%s" % room_search)
         
-        return HttpResponse('<h1> I am a search page </h1>')
-    else:
-        return HttpResponse('<h1> I am not the search page by post method. </h1>')
+        if response.status_code == 200:
+            print(response.json())
+            room_search = response.json()['room_name']
+            return redirect('chat:chat_rooms', username, room_search)
+        else:
+            # print(response.json())
+            return HttpResponse('<h1>404 Not found.</h1>')

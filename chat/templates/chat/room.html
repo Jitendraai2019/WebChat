@@ -67,7 +67,7 @@
       <form action="{% url 'chat:search_room' username room_name %}" method="POST">
         {% csrf_token %}
         <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-        <input type="text" placeholder="Search contacts..." />
+        <input type="text" name="room_name" placeholder="Search room name ..." />
       </form>
 		</div>
 		<div id="contacts">
