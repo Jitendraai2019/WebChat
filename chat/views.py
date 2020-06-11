@@ -60,7 +60,6 @@ def user_details(request, username):
     return render(request, 'chat/user.html', context)
 
 
-
 @login_required(login_url='/login')
 def get_rooms(request, username):
     ''''''
@@ -124,9 +123,6 @@ def filter_rooms_and_friends(user_rooms, current_user):
 
     friends = []
     for users in participants:
-        print('-------------------')
-        print(len(users))
-        print(users)
         if len(users) == 2:
             for user in users:
                 if user.username != current_user.username:
@@ -135,12 +131,9 @@ def filter_rooms_and_friends(user_rooms, current_user):
             temp = ''
             for user in users:
                 temp += ' ' + user.username
-            print(temp)
             friends.append(temp)
-        print(len(friends))
-
+    
     print(len(all_rooms), len(friends))
-    print(friends)
     return zip(all_rooms, friends)
 
 
@@ -166,7 +159,6 @@ def filter_participants(current_user, participants):
 def update_room(request, username, room_name):
     ''''''
     current_user = User.objects.get(username=username)
-    print(current_user, type(current_user))
     return HttpResponse('Hello! I am an updation of room.')
 
 
@@ -176,10 +168,7 @@ def delete_room(request, username, room_name):
     '''
     current_user = User.objects.get(username=username)
     room_name = Room.objects.get(room_name=room_name)
-    print(room_name, type(room_name))
     temp = room_name.participants.all()
-    print(temp)
-    print(room_name, type(room_name))
     room_name.participants.remove(current_user)
     
     return redirect('chat:get_rooms', current_user.username)
