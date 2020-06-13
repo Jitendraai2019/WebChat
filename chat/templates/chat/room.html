@@ -34,6 +34,7 @@
 
     <div id="header-child1">
         <form action="" method="GET">
+            {{username}}
             <a href="{% url 'chat:get_rooms' username %}"><h1 id="logo">JustChat</h1></a>             
         </form>
     </div>
@@ -64,7 +65,7 @@
 			</div>
 		</div>
 		<div id="search">
-      <form action="{% url 'chat:search_room' username room_name %}" method="POST">
+      <form action="{% url 'chat:get_rooms' username %}" method="POST">
         {% csrf_token %}
         <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
         <input type="text" name="room_name" placeholder="Search room name ..." />
