@@ -67,26 +67,18 @@ def get_rooms(request, username):
     current_user = User.objects.get(username=username)
     user_rooms = Room.objects.filter(participants__username=current_user)
     room_details = filter_rooms_and_friends(user_rooms, current_user)
-    print('????????????????????????')
-    print(room_details)
-    print('????????????????????????')
+
     context = {
         'username': current_user,
         'rooms_details': room_details,
         'room_name': ' '
     }
 
-    # if request.method == 'POST':
-    #     return HttpResponse('<h1>I am searching</h1>')
-    #     pass
     if request.method == "POST":
         room_search = request.POST['room_name']
-        # print(room_search)
         response = requests.get(f"http://127.0.0.1:8000/api/chat/{username}/{room_search}")
         
         if response.status_code == 200:
-            print(response.json())
-            print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
             friends = []
             rooms = []
             for room in response.json():
@@ -95,9 +87,6 @@ def get_rooms(request, username):
                 participants = get_friends(current_user, room['participants'])
                 friends.append(participants)
 
-            print(rooms)
-            print(friends)
-            print(current_user.username, type(current_user))
             print(zip(rooms, friends))
 
             for room, friend in zip(rooms, friends):
@@ -207,56 +196,6 @@ def delete_room(request, username, room_name):
     room_name.participants.remove(current_user)
     
     return redirect('chat:get_rooms', current_user.username)
-
-
-# @login_required(login_url='/login')
-# def search_room(request, username):
-#     '''
-#     '''
-#     return HttpResponse('<h1>Successful search</h1>')
-    # current_user = User.objects.get(username=username)
-    
-    # if request.method == "POST":
-    #     room_search = request.POST['room_name']
-    #     # print(room_search)
-    #     response = requests.get(f"http://127.0.0.1:8000/api/chat/{username}/{room_search}")
-        
-    #     if response.status_code == 200:
-    #         print(response.json())
-    #         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    #         friends = []
-    #         rooms = []
-    #         for room in response.json():
-    #             print(room)
-    #             rooms.append(room['room_name'])
-    #             participants = get_friends(current_user, room['participants'])
-    #             friends.append(participants)
-
-    #         print(rooms)
-    #         print(friends)
-    #         print(current_user.username, type(current_user))
-            
-    #         context = {
-    #             'username': current_user.username,
-    #             'room_details': zip(rooms, friends),
-    #             'room_name': ' '
-    #         }
-    #         return render(request, 'chat/room.html')
-    #         return HttpResponse('<h1>Successful search</h1>')
-    #         # room_search = response.json()['room_name']
-    #         # return redirect('chat:chat_rooms', username, room_search)
-
-
-    #         context = {
-    #             'username': current_user,
-    #             'rooms_details': room_details,
-    #             'room_name': ' '
-    #         }
-    #         return HttpResponse('<h1>Successfull search</h1>')
-    #         return render(request, 'chat/room.html', context)
-    #     else:
-    #         # print(response.json())
-    #         return HttpResponse('<h1>404 Not found.</h1>')
 
 
 def get_friends(current_user, participants):

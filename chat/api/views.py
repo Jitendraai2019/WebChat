@@ -21,26 +21,17 @@ class RoomApiView(APIView):
 
     def get_queyset(self, username, search_field):
         ''''''
-        all_rooms = Room.objects.all()
-        all_users = User.objects.all()
-        queryset = Room.objects.filter(room_name__contains=search_field).filter(participants__username=username)
+        # queryset = Room.objects.filter(room_name__contains=search_field).filter(participants__username=username)
+        queryset = Room.objects.filter(participants__username=username).filter(participants__username__contains=search_field)
         print(queryset)
         return queryset
 
 
     def get(self, request, username, search_field):
-        print('**************api searching**********************')
+        ''''''
         queryset = self.get_queyset(username, search_field)
         serializer = RoomSerializer(queryset, many=True)
         return Response(serializer.data)
-
-    # queryset = Room.objects.all()
-    # serializer_class = RoomSerializer
-    # filter_backends = (SearchFilter, OrderingFilter)
-    # search_fields = ('room_name', 'participants__username')
-    # authentication_classes = 
-
-    pass
 
 
 
