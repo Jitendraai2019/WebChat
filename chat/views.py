@@ -14,48 +14,42 @@ def user_details(request, username):
     username = request.user
     user_rooms = Room.objects.filter(participants__username=username)
     current_user = User.objects.get(username=username)
+    all_users = User.objects.order_by('username')
+
     context = {
         'username': current_user,
-        'room_deatails': filter_rooms_and_friends(user_rooms, current_user)
+        'room_deatails': filter_rooms_and_friends(user_rooms, current_user),
+        'all_users': all_users
     }
     if request.method == "POST":
         room_name = request.POST['room_name']
         participants = request.POST['room-participants']
         participants = participants.split()
+        participants.append(current_user)
+        current_user = User.objects.get(username=username)
+        room = Room.objects.filter(room_name=room_name)
+        if not room:
+            user = User.objects.get(username=username)
+            new_room = Room.objects.create(room_name=room_name, user=user)
+            new_room.save()
 
-        if len(participants) == 0:
-            room = Room.objects.filter(room_name=room_name)
-            if not room:
-                user = User.objects.get(username=username)
-                new_room = Room.objects.create(room_name=room_name, user=user)
-                new_room.save()
-                return redirect('chat:chat_room', new_room.room_name)
-            return render(request, 'chat/user.html', context)
-        else:
-            current_user = User.objects.get(username=username)
-            room = Room.objects.filter(room_name=room_name)
-            if not room:
-                user = User.objects.get(username=username)
-                new_room = Room.objects.create(room_name=room_name, user=user)
-                new_room.save()
+            for participant in participants:
+                try:
+                    temp = User.objects.get(username=participant)
+                except:
+                    temp = User.objects.create(username=participant)
+                    temp.save()
+                all_user = User.objects.all()
+                
+                if temp in all_user:
+                    new_room.participants.add(temp)
+                else:
+                    new_user = User.objects.create(username=participant)
+                    new_user.save()
+                    new_room.participant.add(new_user)
+            participants = new_room.participants.all()
 
-                for participant in participants:
-                    try:
-                        temp = User.objects.get(username=participant)
-                    except:
-                        temp = User.objects.create(username=participant)
-                        temp.save()
-                    all_user = User.objects.all()
-                    
-                    if temp in all_user:
-                        new_room.participants.add(temp)
-                    else:
-                        new_user = User.objects.create(username=participant)
-                        new_user.save()
-                        new_room.participant.add(new_user)
-                participants = new_room.participants.all()
-
-                return redirect('chat:chat_rooms', username, new_room.room_name)
+            return redirect('chat:chat_rooms', username, new_room.room_name)
 
     return render(request, 'chat/user.html', context)
 
@@ -86,8 +80,6 @@ def get_rooms(request, username):
                 rooms.append(room['room_name'])
                 participants = get_friends(current_user, room['participants'])
                 friends.append(participants)
-
-            print(zip(rooms, friends))
 
             for room, friend in zip(rooms, friends):
                 print(room, friend)
