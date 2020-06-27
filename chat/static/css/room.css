@@ -529,8 +529,8 @@
 }
 #frame .content .messages {
   height: auto;
-  min-height: calc(100% - 93px);
-  max-height: calc(100% - 93px);
+  min-height: calc(100% - 90px);
+  max-height: calc(100% - 90px);
   overflow-y: initial;
   overflow-x: hidden;
 }
@@ -602,7 +602,7 @@
   font-family: "proxima-nova",  "Source Sans Pro", sans-serif;
   float: left;
   border: none;
-  width: calc(100% - 90px);
+  width: calc(100% - 0px);
   padding: 11px 32px 10px 8px;
   font-size: 0.8em;
   color: #32465a;
