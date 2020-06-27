@@ -1,0 +1,68 @@
+body{
+  margin: 0;
+  padding: 0;
+  /* background-color; */
+  /* background-image: url(../images/web-chat.jpg); */
+}
+
+.frame {
+  height: 100%;
+  /* background-color: orange */
+}
+header {
+  height: 15%;
+  /* background-color: blue; */
+  height: 15%; 
+  background-color: rgb(81, 81, 223);
+  display: flex;
+  justify-content: space-between;
+  align-items: center ;
+}
+.content {
+  height: 85%;
+  /* background-color: palegreen; */
+  background-image: url(../images/web-chat.jpg);
+  background-size: 100% 100%;
+}
+
+#header-child1 {
+  width: 40%;
+  /* background-color: palevioletred; */
+}
+
+#header-child2{
+  width: 60%;
+  /* background-color: pink; */
+  display: flex;
+  justify-content: space-evenly;
+}
+#logo {
+  padding-left: 20%;
+  font-size: 400%;
+  /* text-align: center; */
+  font-weight: bold;
+  font: bolder;
+  /* color:#354463; */
+  color: white;
+  font-family: Helvetica;
+  /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+}
+
+.btn {
+  /* background-color:#C1F7D5;  */
+  background-color: white;
+  border: none;
+  color: darkslategrey;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  /* margin: 4px 2px; */
+  cursor: pointer;
+  border-radius: 7.447vw;
+  /* border-radius: 200%; */
+}
+a {
+  text-decoration: none;
+}
