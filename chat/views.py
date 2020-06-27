@@ -21,11 +21,17 @@ def user_details(request, username):
         'room_deatails': filter_rooms_and_friends(user_rooms, current_user),
         'all_users': all_users
     }
+    
     if request.method == "POST":
+        print('*********testing*********')
         room_name = request.POST['room_name']
-        participants = request.POST['room-participants']
-        participants = participants.split()
+        print('*********testing*********')
+        participants = request.POST.getlist('room-participants')
+        print('*********testing*********')
+        print('-------------------->>>>>', participants)
+        # participants = participants.split()
         participants.append(current_user)
+        print(participants)
         current_user = User.objects.get(username=username)
         room = Room.objects.filter(room_name=room_name)
         if not room:
